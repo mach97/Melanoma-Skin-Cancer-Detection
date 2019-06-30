@@ -11,7 +11,7 @@ using namespace cv;
 
 int main(){
 	// Read img
-Mat ref= imread("/home/andres/Escritorio/ImageProce/Lab8/dataset/melanoma-skin-cancer.jpg",1);
+Mat ref= imread("/home/andres/Escritorio/ImageProce/Lab8/dataset/disp.png",1);
 int x = ref.rows;  //height
 int y = ref.cols; //width
 const char* datasetB[15]={"/home/andres/NOmelanomaphotos/165021.jpg", "/home/andres/NOmelanomaphotos/170216.jpg", "/home/andres/NOmelanomaphotos/174267.jpg", 
@@ -33,9 +33,9 @@ for(int numero=0; numero<15; numero++)
 	cout<<numero<<endl;
 	cout<<"           "<<endl;
 	cout<<"======================================================================"<<endl;
-	const char* Variable="/home/andres/Escritorio/ImageProce/Lab8/dataset/melanoma-skin-cancer.jpg";
+	const char* Variable="/home/andres/Escritorio/ImageProce/Lab8/dataset/disp.png";
 	
-	Mat im2= imread(datasetB[numero],1);
+	Mat im2= imread(datasetM[numero],1);
 	Mat im;	
 	resize(im2,im,Size(x,y));	
 	//cout<<im.size().width <<endl;
@@ -53,14 +53,14 @@ for(int numero=0; numero<15; numero++)
 	hconcat(images1,2,complete1);
 	namedWindow("Original Image",WINDOW_NORMAL);
 	resizeWindow("Original Image",450,450);
-	/*imshow( "Original Image",  im );*/
-	namedWindow("Original - Canny",CV_WINDOW_NORMAL);
-	resizeWindow("Original - Canny",600,600);	
+	//imshow( "Original Image",  im );
+	//namedWindow("Original - Canny",CV_WINDOW_NORMAL);
+	//resizeWindow("Original - Canny",600,600);	
 	/*imshow("Original - Canny",complete1);*/
 	//waitKey(0);
 	
-	threshold(img,croppedImg,110,255,THRESH_BINARY_INV);
-	//croppedImg = otsu(img);	
+	//threshold(img,croppedImg,110,255,THRESH_BINARY_INV);
+	croppedImg = otsu(img);	
 	Mat fin=recortada(croppedImg);
 	Mat edge;
 	blur( fin, fin, Size(3,3) );
@@ -88,8 +88,8 @@ for(int numero=0; numero<15; numero++)
 	cout<<"-----------RESULT------------"<<endl;
 	
 	cout<<"TDS: "<<result<<endl;
-	if(result<5.45) cout<<"Benign Melanoma lesion"<<endl;
-	else if(result>6.0) cout<<"Highly lesion suspicious for melanoma"<<endl;
+	if(result<4.75) cout<<"Benign Melanoma lesion"<<endl;
+	else if(result>5.45) cout<<"Highly lesion suspicious for melanoma"<<endl;
 	else cout<<"Suspicious lesion"<<endl;
 	
 
